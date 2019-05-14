@@ -27,6 +27,8 @@ public:
 
 		return x >= 0 && x < 3 && y >= 0 && y < 3 && board[x][y] == ' ';
 
+		// if the move isn't valid, the player will be prompted again to enter the move 
+
 	}
 
 	Status gameStatus() {
@@ -64,11 +66,15 @@ public:
 
 	void printBoard() {
 		
-		cout << "   0   1   2\n\n"; 
+		// set up the board
+
+		cout << "   0   1   2\n\n"; // create references for rows and columns
 		
 		for (int r = 0; r < 3; r++) {
+
 			cout << r;
-			for (int c = 0; c < 3; c++) {
+
+			for (int c = 0; c < 3; c++) { // make lines on the board 
 
 				cout << setw(3) << static_cast<char>(board[r][c]);
 				
@@ -77,16 +83,19 @@ public:
 			}
 			
 			if (r != 2)
-				cout << "\n___|___|___\n   |   |   \n";
+				cout << "\n___|___|___\n   |   |   \n"; 
 		}
 		cout << "\n\n";
 	}
 
 	void move() {
 
+		// allow player x to print x in desired, valid place
+		// allow player o to print o desired, valid place
+
 		printBoard();
 
-		while (true) {
+		while (true) { 
 
 			if (xoMove('X'))
 				break;
@@ -101,21 +110,25 @@ public:
 
 		int x, y;
 
+		// loop will interchange between player x and o moves as long as the move is valid
+
 		do {
 			cout << "Player " << static_cast<char>(symbol) << " enter move: ";
 			cin >> x >> y;
 
 			cout << '\n';
 
-		} while (!validMove(x, y)); // check for valid move
+		} while (!validMove(x, y)); 
+
 
 		board[x][y] = symbol; // print player's symbol on the board
+								// following built in array convention, row must be entered first followed by column 
 
-		printBoard(); // print new board
+		printBoard(); // print updated board
 
 		Status xoStatus = gameStatus();
 
-		if (xoStatus == W) {
+		if (xoStatus == W) { // check for a win or draw
 
 			cout << "Player " << static_cast<char>(symbol) << "wins\n";
 			return true;
@@ -136,7 +149,7 @@ int main() {
 
 	TicTacToe game;
 
-	game.move();
+	game.move(); // call the game in main
 
 	return 0;
 }
